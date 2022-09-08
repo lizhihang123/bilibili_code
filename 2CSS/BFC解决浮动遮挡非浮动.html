@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .father {
+            float: left;
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+        }
+
+        .brother {
+            width: 300px;
+            height: 300px;
+            background-color: purple;
+
+        }
+
+        .bfc {
+            overflow: auto;
+            /* float: left; */
+            /* position: absolute; */
+            /* display: inline-block; */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="father">我是浮动的元素</div>
+    <div class="bfc">
+        <div class="brother">我是非浮动的元素</div>
+    </div>
+</body>
+
+</html>

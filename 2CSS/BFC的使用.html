@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 
+        1. 如果 没有 bfc这个类名会怎么样呢?
+        2. BFC -> 块级格式化上下文 -> 内部渲染区域独立 不会影响外部区域 -> 能够解决清除浮动的问题
+        3. 如何触发BFC overflow: hidden; float不为none；position: fixed | absolute；display: inline-block;
+        */
+        .box {
+            background-color: pink;
+        }
+
+        .left {
+            float: left;
+        }
+
+        .bfc {
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box bfc">
+        <img class="left" src="./640.png" alt="">
+        <p>这是一段演示BFC的文字</p>
+    </div>
+</body>
+
+</html>
