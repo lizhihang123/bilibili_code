@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /* 
+        应用场景 求数组的最大值
+        */
+        var arr = [1, 2, 3, 99]
+        console.log(Math.max.apply(null, arr)); // 99
+        console.log(Math.max.apply(arr)); // -Infinity
+        /*
+            为什么这里的apply方法 如果没有指定this指向为null 只有一个参数 arr 输出就是Infinity
+        */
+    </script>
+</body>
+
+</html>

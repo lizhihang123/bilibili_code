@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // apply函数
+        function add(a, b) {
+            console.log(this); // 打印的是sub函数
+            return a + b
+        }
+        function sub(a, b) {
+            return a - b
+        }
+        console.log(add.apply(sub, [1, 2])); // 3
+        // console.log(add.apply(sub, 1, 2)); // 报错 CreateListFromArrayLike called on non-object
+
+
+        /* 
+            好像这里用call 和 用apply是一样的效果 我有点不理解
+            下面是执行slice方法，把arguments转化为了真的数组 然后用sort进行转化
+        */
+        function fn() {
+            console.log(arguments);
+            // 为什么call参数可以是一个arguments对象
+            return Array.prototype.slice.call(arguments).sort()
+            return Array.prototype.slice.apply(arguments).sort()
+        }
+        console.log(fn(1, 2, 5, 4)); // [1, 2, 4, 5]
+
+    </script>
+</body>
+
+</html>

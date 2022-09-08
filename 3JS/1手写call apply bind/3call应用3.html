@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /* 
+        应用场景 改变匿名函数的this指向
+        */
+        var person = [
+            { id: 1, username: 'zhangsan' },
+            { id: 2, username: 'lisi' }
+        ]
+
+        for (var i = 0; i < person.length; i++) {
+            (function (i) {
+                this.print = function () {
+                    console.log(this);// 打印是window
+                    console.log(this.id); // undefined
+                }
+                this.print()
+            })(i)
+        }
+
+
+        for (var i = 0; i < person.length; i++) {
+            (function (i) {
+                this.print = function () {
+                    console.log(this);// 打印是window
+                    console.log(this.id); // 1 2 
+                }
+                this.print()
+            }.call(person[i], i)) // 里面的匿名函数调用时 让指向的对应的数组里面的对象 
+        }
+
+    </script>
+</body>
+
+</html>

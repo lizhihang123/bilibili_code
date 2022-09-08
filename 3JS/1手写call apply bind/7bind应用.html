@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // bind函数的使用
+        function add(a, b, c) {
+            // console.log(this); // 打印的是sub函数
+            return a + b + c
+        }
+        function sub(a, b) {
+            return a - b
+        }
+        console.log(add.bind(sub, 1, 2, 3)()); // 3
+        console.log(add.bind(sub, 3)(1, 2)); // 3 这样写也是ok的 bind返回的还是一个函数 需要再次调用
+
+        // 如果是构造函数调用呢？
+        function Person(a, b, c) {
+            this.a = a
+            this.b = b
+            console.log('this', this);
+            console.log('a', a);
+            console.log('b', b);
+            console.log('c', c);
+            this.add = function () {
+                console.log('111');
+            }
+        }
+        let obj = {
+            name: 10,
+            age: 100
+        }
+        let person = Person.bind(obj, 200)
+        let re = new person(10, 20)
+        re.add()
+    </script>
+</body>
+
+</html>

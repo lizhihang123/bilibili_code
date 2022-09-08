@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /* 
+        应用场景 构造函数继承
+        */
+        function Person(name, age) {
+            this.name = name
+            this.age = age
+        }
+        function Student(name, age, gender) {
+            Person.call(this, name, age)
+            this.gender = gender
+        }
+        var student = new Student('lizhihang', '19', '0')
+        console.log(student); // {name: 'lizhihagn', age: '19', gender: 0}
+
+    </script>
+</body>
+
+</html>

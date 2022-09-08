@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /* 
+        区别：
+            1. call和apply 都是立即调用函数 bind是返回一个函数 需要手动调用
+            2. call和bind都是传递1个或者多个参数 而 apply的参数必须是封装好的数组或者是arguments对象
+            3. call和bind 和 apply都是可以改变函数调用时的this指向
+            4. 如果是箭头函数 调用call bind apply 第一个参数都会被忽略 无法改变this指向 因为箭头函数的this指向在 定义位置的 上下文中继承 => 就是箭头函数的this 取决于 箭头函数定义的位置 的上下问的位置 无法被修改
+        */
+        function add(a, b) {
+            console.log(this); // 指向是sum函数
+            return a + b
+        }
+        function sum(a, b) {
+            return a + b
+        }
+        console.log(add.call(sum, 1, 2)); // 3
+    </script>
+</body>
+
+</html>

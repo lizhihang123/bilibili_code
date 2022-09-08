@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /*
+        手写apply
+        */
+
+        Function.prototype.myApply = function (context) {
+            debugger
+            // 2. 结果变量
+            var result = null
+            // 3. 判断是否传入了this指向对象
+            context = context || window
+            // 4. 给上下文对象 赋值 值就是add函数
+            context.fn = this
+            // 5. 判断是否有传入参数 注意 apply传入的是一个数组
+            if (arguments[1]) {
+                // 6. 如果传入，就利用扩展运算符 展开 注意所以是1，
+                result = context.fn(...arguments[1])
+            } else {
+                // 7. 如果没有传入参数，就直接调用
+                result = context.fn()
+            }
+            // 8. 删除增加的属性
+            delete context.fn
+            // 9. 返回结果
+            return result
+        }
+
+        function add(num1, num2) {
+            console.log(this);
+            console.log(num1 + num2);
+        }
+        function sub(num1, num2) {
+            console.log(num1 - num2);
+        }
+        // add.myApply(sub, [6, 3]) // 9
+        // add.myApply(sub) // NaN
+        // 我原来疑惑 如果没有传入第一个参数 那么返回的是NaN 是不是有问题 测试了一下 apply的原始方法也是这样
+        // add.myApply([6, 3]) // NaN
+        // add.apply([9, 3]) // NaN
+    </script>
+</body>
+
+</html>
