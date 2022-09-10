@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 
+            合并演示
+        */
+        .box1 {
+            width: 200px;
+            font-size: 20px;
+            background-color: pink;
+            margin-bottom: 20px;
+        }
+
+        .box2 {
+
+            width: 200px;
+            font-size: 20px;
+            background-color: blue;
+            margin-top: 10px;
+        }
+
+        .bfc {
+            overflow: auto;
+        }
+
+        .empty {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box1">123</div>
+    <div class="empty"></div>
+    <div class="box2">456</div>
+    <!-- 中间元素会被忽略 -->
+</body>
+
+</html>
