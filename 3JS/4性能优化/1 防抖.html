@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="input">
+    <button id="btn">点击提交</button>
+    <script>
+        let btn = document.getElementById('btn')
+        function submit(e) {
+            console.log(1);
+            console.log(e);
+            console.log(this);
+        }
+        function debounce(func, delay, triggleNow) {
+            let timer = null
+            let args = arguments
+            let context = this
+            return function () {
+                if (timer) {
+                    clearTimeout(timer)
+                }
+                if (triggleNow) { // 要求第一次触发 立即执行
+                    if (timer === null) {
+                        // 第一次触发立即执行
+                        func.apply(context, args)
+                        timer = setTimeout(function () {
+                            timer = null
+                        }, delay)
+                    } else {
+                        // 非第一次触发 那么就重新开始计时器
+                        timer = setTimeout(function () {
+                            func.apply(context, args)
+                            timer = null
+                        }, delay)
+                    }
+                } else { // 不要求第一次触发 立即执行
+                    timer = setTimeout(function () {
+                        func.apply(context, args)
+                        timer = null
+                    }, delay)
+                }
+            }
+        }
+        btn.addEventListener('click', debounce(submit, 2000, true), false)
+        // btn.addEventListener('click', submit, false)
+
+    </script>
+</body>
+
+</html>

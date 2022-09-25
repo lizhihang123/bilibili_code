@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function coloring(e) {
+            console.log(e.target);
+            let r = Math.floor(Math.random() * 255)
+            let g = Math.floor(Math.random() * 255)
+            let b = Math.floor(Math.random() * 255)
+            document.body.style.background = `rgb(${r}, ${g}, ${b})`
+        }
+
+        function throttle(func, delay) {
+            // timer变量在外面声明
+            let timer
+            return function() {
+                // 修改this
+                let context = this
+                // 注意传参
+                let args = arguments
+                // 防抖的关键 如果timer变量还有值 说明时间还没有到
+                if (timer) {
+                    return
+                }
+                timer = setTimeout(function(){
+                    func.apply(context, args)
+                    // timer变量清空
+                    timer = null
+                }, delay)
+            }
+        }
+
+        window.addEventListener('resize', throttle(coloring, 2000))
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="oInput">
+    <script type="text/javascript">
+        function coloring() {
+            let r = Math.floor(Math.random() * 255)
+            let g = Math.floor(Math.random() * 255)
+            let b = Math.floor(Math.random() * 255)
+            document.body.style.background = `rgb(${r}, ${g}, ${b})`
+        }
+        function throttle(func, delay) {
+            let pre = new Date().getTime()
+            return function () {
+                let context = this
+                let args = arguments
+                let now = new Date().getTime()
+                if ((now - pre) > delay) {
+                    func.apply(context, args)
+                    pre = now
+                }
+            }
+        }
+        function fn() {
+            console.log(1);
+        }
+        // 1.输入框输入
+        let oInput = document.querySelector('#oInput')
+        oInput.addEventListener('input', throttle(fn, 2000))
+        // 2.屏幕尺寸的变化
+        window.addEventListener('resize', throttle(coloring, 2000))
+    </script>
+</body>
+
+</html>
