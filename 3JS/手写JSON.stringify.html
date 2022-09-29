@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 1.如果里面的值是 Boolean Number String类型会自动转换成对应的原始值，外面套上字符串 比如 JSON.stringify(100) => "100"
+        // 2.undefined、函数、symbol 直接输出 undefined
+        // 3.不可枚举的属性会被忽略
+        // 4.如果一个对象的属性值通过某种间接的方式指回该对象本身，即循环引用属性也会被忽略
+        let obj = {
+            name: 123,
+            age: '456'
+        }
+        // 不可以枚举的属性
+        let obj2 = {}
+        Object.defineProperty(obj2, 'height', {
+            enumerable: false,
+            value: 180
+        })
+        // 循环引用的问题
+        let a = {
+            name: '123'
+        }
+        a.info = a
+        let newObj = JSON.stringify(obj)
+        // console.log(newObj); // "{"name": "123", "age": "456"}"
+        // console.log(typeof newObj); // string
+        console.log(JSON.stringify([1, 2, 3]));
+        // console.log(JSON.stringify('123')); // "123"
+        // console.log(JSON.stringify(true)); // "true"
+        // console.log(JSON.stringify(100)); // "100"
+        // console.log(JSON.stringify(undefined)); // undefined 本身
+        // console.log(JSON.stringify(function fn() { })); // undefined 本身
+        // console.log(JSON.stringify(Symbol(10))); // undefined 本身
+        // console.log(JSON.stringify(a)); // 空对象 会被报错
+
+        function jsonStringify(obj) {
+            debugger
+            let type = typeof obj;
+            if (type !== "object") {
+                if (/string|undefined|function/.test(type)) {
+                    obj = '"' + obj + '"';
+                    // 上面是有 "\"undefined\"" 有两层
+                    // obj = obj + "" 仅仅是字符串
+                }
+                // 注意 String和 new String的区别是什么
+                return String(obj);
+            } else {
+                let json = []
+                let arr = Array.isArray(obj)
+                for (let k in obj) {
+                    let v = obj[k];
+                    let type = typeof v;
+                    if (/string|undefined|function/.test(type)) {
+                        v = '"' + v + '"';
+                    } else if (type === "object") {
+                        v = jsonStringify(v);
+                    }
+                    json.push((arr ? "" : '"' + k + '":') + String(v));
+                }
+                return (arr ? "[" : "{") + String(json) + (arr ? "]" : "}")
+            }
+        }
+        // console.log(jsonStringify([1, 2, 3])); // "[1,2,3]"
+
+
+        // "\"123\"" 是什么意思 返回的是什么
+        // console.log(jsonStringify('123')); // "123"  其实外面还套着一层字符串
+        // console.log(jsonStringify(true)); // "true"
+        // console.log(jsonStringify(100)); // "100"
+        var obj3 = {
+            a: undefined
+        }
+        // console.log(jsonStringify(obj3));
+        // console.log(jsonStringify(undefined)); // undefined 本身
+        // console.log(jsonStringify(function fn() { })); // undefined 本身
+        // console.log(jsonStringify(Symbol(10))); // undefined 本身
+        // console.log(JSON.stringify(a)); // 空对象 会被报错
+
+
+        // function test(str) {
+        //     return "\"" + str + "\""
+        //     // return `\"${str}\"`
+        // }
+        // console.log(test("123"));
+
+
+        // 小结：
+        // 最大的疑惑就是 JSON.stringify()把function () {}转化为undefined
+        // 为什么手写的要转化为查询字符串
+
+        // JSON.stringify的功能：
+        // 1.对象 转化为 字符串 里面的属性也都加上引号 值如果是数字就返回原本的数字，是字符，就改成双引号
+        // 2.数组 就转化为字符串 里面的每个值也都变为字符串
+        // 3.布尔值 数字 转化为字符串
+        // 4.undefined 函数 symbol 就转化为undefined
+        // 5.如果是对象 循环引用 就报错
+
+        // 手写的逻辑：
+        // 1.先判断是不是对象
+        //   不是 判断是不是字符串 undefined function
+        //        是 拼接两个字符串
+        //        不是，直接返回 String()
+        //   是   遍历
+        //        递归判断
+        //        创建一个json数组
+        //         如果是对象 递归
+        //         如果不是对象 判断是不是string  undefined function
+        //          是嵌套双引号
+        //         返回拼接，
+    </script>
+</body>
+
+</html>
