@@ -295,7 +295,34 @@ class Compiler {
     let reg = /\{\{\s*(\S+)\s*\}\}/g;
 ```
 
-2.理解，如何去循环遍历 获取一个对象的属性
+
+
+2.reg.exec(要匹配的值) 返回的是一个数组
+
+exec里面的运行机制,返回数组，里面有匹配的值，如果有()分组，数组里还会有单独的值
+
+{{name}} name
+
+```diff
+let reg = /\{\{\s*(\S+)\s*\}\}/g;
+let value = node.nodeValue; // 值是 "{{name}}"
+const arr_result = reg.exec(value);
+```
+
+
+
+**replace**
+
+```js
+let reg = /\{\{\s*(\S+)\s*\}\}/g;
+str.replace(reg, value)
+```
+
+
+
+
+
+3.理解，如何去循环遍历 获取一个对象的属性
 
 ```js
 let value = arr.reduce((total, key) => {
@@ -309,18 +336,6 @@ this.vm[info][height]
 ```
 
 
-
-3.reg.exec(要匹配的值) 返回的是一个数组
-
-exec里面的运行机制,返回数组，里面有匹配的值，如果有()分组，数组里还会有单独的值
-
-{{name}} name
-
-```diff
-let reg = /\{\{\s*(\S+)\s*\}\}/g;
-let value = node.nodeValue; // 值是 "{{name}}"
-const arr_result = reg.exec(value);
-```
 
 
 

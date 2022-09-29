@@ -18,6 +18,7 @@ class Observer {
   defineReactive(data, key, value) {
     // 转化为响应式
     this.walk(value);
+    let context = this;
     Object.defineProperty(data, key, {
       configurable: true,
       enumerable: true,
@@ -36,7 +37,8 @@ class Observer {
         // ("[object Object]");
         console.log(`修改${key}为${newValue}`);
         value = newValue;
-        this.walk(value);
+        // console.log(this === vm.$data);
+        context.walk(value);
       },
     });
   }

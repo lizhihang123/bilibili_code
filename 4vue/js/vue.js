@@ -8,7 +8,10 @@ class Vue {
         : options.el;
     this.$data = options.data;
     this._proxyData(this.$data);
+    // 转化为响应式
     new Observer(this.$data);
+    // 解析模板指令
+    new Compiler(this);
   }
   // 2.defineProperty API 转化属性为getter和setter
   _proxyData(data) {

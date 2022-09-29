@@ -12,10 +12,14 @@
     <div id="app">
         <p>{{插值表达式}}</p>
         <span>{{name}}</span>
+        <span>{{info.height}}</span>
+        <input type="text" v-model="age">
     </div>
-    <script src="./js/observe.js"></script>
+    <script src="./js/compiler.js"></script>
+    <script src="./js/observer.js"></script>
     <script src="./js/vue.js"></script>
     <script>
+        console.log(document.querySelector('#app'))
         const vm = new Vue({
             el: '#app',
             data: {
