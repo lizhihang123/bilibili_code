@@ -19,11 +19,14 @@ class Observer {
     // 转化为响应式
     this.walk(value);
     let context = this;
+    let dep = new Dep();
     Object.defineProperty(data, key, {
       configurable: true,
       enumerable: true,
       get() {
-        console.log(`访问了${value}`);
+        // Dep.target就是 watcher实例
+        // 如果存在Dep.taregt，代表存在新的依赖者，就添加到subs数组里面去
+        Dep.target && dep.addSub(Dep.target);
         return value;
       },
       set(newValue) {
@@ -39,6 +42,8 @@ class Observer {
         value = newValue;
         // console.log(this === vm.$data);
         context.walk(value);
+        // 属性改变，更新所有的依赖者
+        dep.notify();
       },
     });
   }

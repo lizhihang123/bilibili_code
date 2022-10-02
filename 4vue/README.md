@@ -495,7 +495,7 @@ class Observer {
     // 让data数据里面对象的值也是响应式
     this.walk(value);
     let that = this;
-    let dep = new Dep();
++    let dep = new Dep();
     Object.defineProperty(obj, key, {
       enumerable: true,
       configurable: true,
@@ -533,7 +533,17 @@ class Observer {
 
 ## 9. 创建watch类
 
+watch类：
 
+1.干什么的？依赖，使用了某个属性的类。
+
+2.在哪里去new 创建的？使用了某个属性，就要创建，针对某个属性的类。
+
+
+
+目标：
+
+1.watch类给完善 
 
 ```js
 class Watch {
@@ -707,7 +717,7 @@ update(node, key, attrName) {
     }, this.vm);
     // updateFn可能是textUpdater 也可能是 modelUpdater
     // 通过.call来修改当前的this指向为 compiler类
-    updateFn && updateFn.call(this, node, value, arr);
+    updateFn &&  .call(this, node, value, arr);
   }
   textUpdater(node, value, arr) {
     // 这个是div 所以修改的是textContent
@@ -769,5 +779,3 @@ Vue的解决方式如下。里面也包含了对数组的处理
 ```js
 https://v2.cn.vuejs.org/v2/guide/reactivity.html#%E5%A6%82%E4%BD%95%E8%BF%BD%E8%B8%AA%E5%8F%98%E5%8C%96
 ```
-
-3.当数据是对象时，该如何去处理？

@@ -26,7 +26,7 @@ class Compiler {
   }
   //判断元素是否为指令
   isDirectiveNode(attrName) {
-    return attrName.startsWith === "v-";
+    return attrName.startsWith("v-");
   }
   //解析方法
   compiler(el) {
@@ -59,7 +59,6 @@ class Compiler {
     let arr_result = reg.exec(value);
     if (arr_result) {
       let arr = arr_result[1].split(".");
-      console.log(arr);
       // replace方法
       // str.replace(reg, target)
       // reduce
@@ -70,8 +69,57 @@ class Compiler {
       // this.vm['info'][height]
       let finalValue = arr.reduce((prev, cur) => prev[cur], this.vm);
       node.nodeValue = node.nodeValue.replace(reg, finalValue);
+      // 为什么在这个地方 new实例呢？
+      // 因为页面一进来就会访问这里，解析文本节点，然后访问get函数，就会去判断有没有依赖者
+      // 如果使用了属性，这个if分支才能够进来，说明有依赖者
+      new Watch(this.vm, arr[0], (newValue) => {
+        node.nodeValue = newValue;
+      });
     }
   }
-  //解析元素节点
-  compileElement() {}
+  // 解析元素节点
+  compileElement(node) {
+    // 1.获取所有属性节点
+    // 2.获取属性的name值
+    // 3.判断是否是指令
+    // 4.调用update方法 传入节点 变量名 属性名的截取
+    Array.from(node.attributes).forEach((attr) => {
+      if (this.isDirectiveNode(attr.name)) {
+        // age name 目的就是 this.vm[age]
+        let key = attr.value;
+        // v-model => model
+        let attrName = attr.name.substr(2);
+        this.update(node, key, attrName);
+      }
+    });
+  }
+  // 分析指令 调用指令的方法
+  update(node, key, attrName) {
+    // model + 'Updater' => modelUpdater
+    // text + 'Updater' => textUpdater
+    let updateFn = this[attrName + "Updater"];
+    // 注意！如果是 info.height this.vm[info.height] 访问不到
+    // reduce
+    let value = this.vm[key];
+    // 调用更新的方法
+    updateFn && updateFn.call(this, node, value, key);
+  }
+  // 声明更新的具体的方法
+  // input框绑定v-model 修改的是value属性
+  modelUpdater(node, value, key) {
+    node.value = value;
+    new Watch(this.vm, key, (newValue) => {
+      node.value = newValue;
+    });
+    node.addEventListener("input", () => {
+      this.vm[key] = node.value;
+    });
+  }
+  // p标签绑定v-text 修改的是textContent属性
+  textUpdater(node, value, key) {
+    node.textContent = value;
+    new Watch(this.vm, key, (newValue) => {
+      node.textContent = newValue;
+    });
+  }
 }
