@@ -779,3 +779,5 @@ Vue的解决方式如下。里面也包含了对数组的处理
 ```js
 https://v2.cn.vuejs.org/v2/guide/reactivity.html#%E5%A6%82%E4%BD%95%E8%BF%BD%E8%B8%AA%E5%8F%98%E5%8C%96
 ```
+
+3.info.height 这个属性值
